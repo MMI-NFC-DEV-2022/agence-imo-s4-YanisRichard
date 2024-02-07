@@ -9,8 +9,16 @@ import { RouterLink, RouterView } from 'vue-router'
     <nav class="*:text-red-500 flex flex-col">
       <RouterLink to="/">Home</RouterLink>
       <RouterLink to="/about">About</RouterLink>
+      <RouterLink to="/simple">Simple</RouterLink>
+      <RouterLink to="/maisons">maisons</RouterLink>
+
     </nav>
   </header>
 
-  <RouterView />
+    <Affiche-maison />
+
+    <Suspense>
+
+      <RouterView />
+    </Suspense>
 </template>
