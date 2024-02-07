@@ -54,9 +54,6 @@ const maisons = [
 
 <template>
     <h1>On passe les valeurs en objet avec v-bind</h1>
-    <AfficheMaison v-bind="maisons[0]" />
-    <AfficheMaison v-bind="maisons[1]" />
-    <AfficheMaison v-bind="maisons[2]" />
 
     <AfficheMaison v-for="maison of maisons" v-bind="maison" :key="maison.nomMaison"/>
 </template>
