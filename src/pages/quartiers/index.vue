@@ -2,6 +2,7 @@
 import { RouterLink } from "vue-router";
 import { supabase } from "@/supabase";
 import type { Database } from "@/supabase-types";
+import { useRouter } from "vue-router";
 // let { data, error } = await supabase
 //   .from('quartier_commune')
 //   .select()
@@ -17,22 +18,26 @@ console.log("les quarties par commune : ",data);
   
 if (error) console.log("n'a pas pu charger la table quartiercommune :", error);
 
+let idQuartierASupprimer = 0 ; 
+const router= useRouter();
 async function supprimerQuartier() {
-    console.log("supprimerQuartier");
-//   const { data, error } = await supabase
-//     .from("Quartier")
-//     .delete()
-//     .match({ code_Quartier: quartierObject.value.code_Quartier });
-//   if (error) {
-//     console.error(
-//       "Erreur à la suppression de ",
-//       quartierObject.value,
-//       "erreur :",
-//       error
-//     );
-//   } else {
-//     router.push("/quartier");
-//   }
+    console.log("supprimerQuartier", idQuartierASupprimer);
+  const { data, error } = await supabase
+    .from("Quartier")
+    .delete()
+    .match({ id: idQuartierASupprimer });
+    console.log("data :", data, "error :", error);
+    
+  if (error) {
+    console.error(
+      "Erreur à la suppression de ",
+      idQuartierASupprimer,
+      "erreur :",
+      error
+    );
+  } else {
+    router.push({ name: "/quartiers/",force:true});
+  }
 }
 
 </script>
@@ -57,20 +62,27 @@ async function supprimerQuartier() {
         {{ Commune.nom_commune }} 
         <ul>
             <li v-for="Quartier in (Commune.Quartier)" :key="Quartier.id">
-                <RouterLink :to="{name:'/quartiers/edit/[[id]]', params:{id:Quartier.id}}"> {{ Quartier.nom_quartier }} </RouterLink> </li>
-        </ul>
-       
+                <RouterLink :to="{name:'/quartiers/edit/[[id]]', params:{id:Quartier.id}}"> 
+                    {{ Quartier.nom_quartier }} 
+                </RouterLink> 
+                <button
+                    type="button"
+                    @click="($refs.dialogSupprimer as any).showModal(); idQuartierASupprimer = Quartier.id"
+                    class="focus-style justify-self-end rounded-md bg-red-500 p-2 shadow-sm"
+                >       
+                    Supprimer l'offre
+                </button>
+            </li>
+            </ul>
+
+
+    
+      
+
       </li>
     </ul>
 
-    <button
-        type="button"
-        @click="($refs.dialogSupprimer as any).showModal()"
-        class="focus-style justify-self-end rounded-md bg-red-500 p-2 shadow-sm"
-      >
-        Supprimer l'offre
-      </button>
-      <dialog
+    <dialog
         ref="dialogSupprimer"
         @click="($event.currentTarget as any).close()"
       >
@@ -87,6 +99,5 @@ async function supprimerQuartier() {
           Confirmer suppression
         </button>
       </dialog>
-
   </section>
 </template>
