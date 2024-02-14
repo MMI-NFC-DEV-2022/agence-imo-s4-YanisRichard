@@ -17,6 +17,24 @@ console.log("les quarties par commune : ",data);
   
 if (error) console.log("n'a pas pu charger la table quartiercommune :", error);
 
+async function supprimerQuartier() {
+    console.log("supprimerQuartier");
+//   const { data, error } = await supabase
+//     .from("Quartier")
+//     .delete()
+//     .match({ code_Quartier: quartierObject.value.code_Quartier });
+//   if (error) {
+//     console.error(
+//       "Erreur à la suppression de ",
+//       quartierObject.value,
+//       "erreur :",
+//       error
+//     );
+//   } else {
+//     router.push("/quartier");
+//   }
+}
+
 </script>
 
 <template>
@@ -44,5 +62,31 @@ if (error) console.log("n'a pas pu charger la table quartiercommune :", error);
        
       </li>
     </ul>
+
+    <button
+        type="button"
+        @click="($refs.dialogSupprimer as any).showModal()"
+        class="focus-style justify-self-end rounded-md bg-red-500 p-2 shadow-sm"
+      >
+        Supprimer l'offre
+      </button>
+      <dialog
+        ref="dialogSupprimer"
+        @click="($event.currentTarget as any).close()"
+      >
+        <button
+          type="button"
+          class="focus-style justify-self-end rounded-md bg-blue-300 p-2 shadow-sm"
+        >
+          Annuler</button
+        ><button
+          type="button"
+          @click="supprimerQuartier()"
+          class="focus-style rounded-md bg-red-500 p-2 shadow-sm"
+        >
+          Confirmer suppression
+        </button>
+      </dialog>
+
   </section>
 </template>

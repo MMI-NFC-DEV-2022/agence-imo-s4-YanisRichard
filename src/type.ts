@@ -9,4 +9,9 @@ export interface SchemaOffreMaison {
     adresse: string;
     surface: string;
   }
+
+export interface SchemaQuartier [
+  id?: string;
+  nom_quartier: string; 
+]
   
