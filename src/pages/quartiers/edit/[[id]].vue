@@ -1,16 +1,21 @@
 <script setup lang="ts">
 import { ref } from 'vue';
 import { supabase } from '@/supabase';
+import { FormKit } from '@formkit/vue';
 console.log("supabase :", supabase);
 
   
 </script>
+
 <template>
     <div>
-         <FormKit type="form">
-            <FormKit name="nomMaison" label="nom"></FormKit>
-            <FormKit name="prix" label="prix" type="number"></FormKit>
-            <FormKit name="favori" label="mettre en valeur" type="checkbox"></FormKit>
+        <FormKit 
+            type="form" 
+            v-model="quartier"
+            :submit-attrs="{ classes: { input: 'bg-red-300 p-1 rounded' } }"
+            @submit="upsertQuartier"
+        >
+            <FormKit name="nom_quartier" label="Nom Quartier"></FormKit>
         </FormKit> 
     </div>
 </template>
